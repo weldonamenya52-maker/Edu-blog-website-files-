@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EDU BLOG | Admin Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 5px 20px #0002;
+    }
+    h1 { color: #1746a2; }
+    label {
+      display: block;
+      margin: 16px 0 6px;
+    }
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 20px;
+      background: #1746a2;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    #message { color: #b42318; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>EDU BLOG</h1>
+    <p>Administrator Login</p>
+
+    <form id="loginForm">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required>
+
+      <button type="submit">Sign In</button>
+    </form>
+
+    <p id="message">Firebase connection will be added next.</p>
+  </main>
+</body>
+</html>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  // Replace these values with the ones in your Firebase Notes.
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqWnz0an4M9tmp6SbbBfBXlGAXqvp8qiw",
+    authDomain: "edu-blog-a6061.firebaseapp.com",
+    projectId: "edu-blog-a6061",
+    storageBucket: "edu-blog-a6061.firebasestorage.app",
+    messagingSenderId: "1022460919409",
+    appId: "1:1022460919409:web:8376b4d41c12603f1165d0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const form = document.getElementById("loginForm");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    message.style.color = "#1746a2";
+    message.textContent = "Signing in...";
+
+    try {
+      const result = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      message.style.color = "#137333";
+      message.textContent = "Login successful! Checking administrator access...";
+
+      // Replace this with your actual admin UID from Firebase.
+      const ADMIN_UID = "4MT7hT1MUUfl1qQAYmF0d7V9siq1";
+
+      if (result.user.uid !== ADMIN_UID) {
+        await signOut(auth);
+        message.style.color = "#b42318";
+        message.textContent = "Access denied: this account is not an administrator.";
+        return;
+      }
+
+      // Temporary success until we create the admin dashboard.
+      message.textContent = "Administrator login successful!";
+    } catch (error) {
+      message.style.color = "#b42318";
+
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        message.textContent = "Incorrect email or password.";
+      } else if (error.code === "auth/too-many-requests") {
+        message.textContent = "Too many attempts. Please wait and try again.";
+      } else {
+        message.textContent = "Login failed: " + error.message;
+      }
+    }
+  });
+</script>
+

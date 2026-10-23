@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDU BLOG Admin Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #172033;
+    }
+    header {
+      background: #123b75;
+      color: white;
+      padding: 20px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 23px; }
+    header p { margin: 0; opacity: .9; }
+    main { max-width: 850px; margin: auto; padding: 18px; }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px #17203312;
+    }
+    .status { color: #176b3a; font-weight: bold; }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: #1557a6;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button.logout { background: #b42318; }
+    button:disabled { opacity: .6; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    small { color: #5b6474; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EDU BLOG</h1>
+    <p>Administrator Dashboard</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Welcome, Administrator!</h2>
+      <p id="status">Checking administrator access...</p>
+      <p><small id="account"></small></p>
+    </section>
+
+    <section class="card">
+      <h2>Manage Learning Materials</h2>
+      <p>You'll be able to add, edit, publish and manage study resources here.</p>
+      <div class="actions">
+        <button id="addResource" disabled>Add Resource</button>
+        <button id="viewResources" disabled>View Resources</button>
+      </div>
+      <p><small>Resource management will be connected in the next step.</small></p>
+    </section>
+
+    <section class="card">
+      <h2>Account</h2>
+      <button id="logout" class="logout" disabled>Log Out</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // Replace these values with the SAME Firebase web config used
+    // in your working admin-login.html file.
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqWnz0an4M9tmp6SbbBfBXlGAXqvp8qiw",
+      authDomain: "edu-blog-a6061.firebaseapp.com",
+      projectId: "edu-blog-a6061",
+      storageBucket: "edu-blog-a6061.firebasestorage.app",
+      messagingSenderId: "1022460919409",
+      appId: "1:1022460919409:web:8376b4d41c12603f1165d0"
+    };
+
+    // Replace with your actual administrator UID.
+    const ADMIN_UID = "4MT7hT1MUUfl1qQAYmF0d7V9siq1";
+
+    const statusText = document.getElementById("status");
+    const accountText = document.getElementById("account");
+    const logoutButton = document.getElementById("logout");
+    const addButton = document.getElementById("addResource");
+    const viewButton = document.getElementById("viewResources");
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          window.location.replace("admin-login.html");
+          return;
+        }
+
+        if (user.uid !== ADMIN_UID) {
+          await signOut(auth);
+          window.location.replace("admin-login.html");
+          return;
+        }
+
+        statusText.textContent = "Administrator access verified.";
+        statusText.className = "status";
+        accountText.textContent = "Signed in as: " + user.email;
+        logoutButton.disabled = false;
+        addButton.disabled = false;
+        viewButton.disabled = false;
+      });
+
+      logoutButton.addEventListener("click", async () => {
+        await signOut(auth);
+        window.location.replace("admin-login.html");
+      });
+
+      addButton.addEventListener("click", () => {
+        alert("The Add Resource form will be connected next.");
+      });
+
+      viewButton.addEventListener("click", () => {
+        alert("The resource list will be connected next.");
+      });
+    } catch (error) {
+      statusText.textContent = "Dashboard setup error. Check the Firebase configuration.";
+      console.error(error);
+    }
+  </script>
+</body>
+</html>

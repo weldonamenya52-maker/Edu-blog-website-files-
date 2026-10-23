@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDU BLOG | Learn today. Achieve tomorrow.</title>
+<style>
+:root{--navy:#123b65;--blue:#1f6feb;--gold:#f5b942;--ink:#172536;--muted:#65758b;--bg:#f4f7fb;--card:#fff;--line:#e0e7ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--navy);color:#fff;padding:18px max(18px,calc((100% - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.2rem;letter-spacing:.3px}.logo{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--navy);display:grid;place-items:center;font-size:24px}
+nav{display:flex;gap:8px;flex-wrap:wrap}button,.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;font-size:.94rem}
+nav button{background:transparent;color:#fff}nav button.active,nav button:hover{background:#ffffff22}
+main{max-width:1100px;margin:auto;padding:26px 18px 60px}.hero{background:linear-gradient(120deg,#123b65,#1c6096);border-radius:22px;padding:32px;color:#fff;display:grid;grid-template-columns:1.4fr .6fr;gap:20px;align-items:center}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:8px 0 14px}.hero p{color:#e0edf8;max-width:620px}.hero .btn{background:var(--gold);color:#252525}.hero-icon{font-size:100px;text-align:center;opacity:.95}
+.pill{display:inline-block;background:#eaf2ff;color:#194e83;padding:5px 10px;border-radius:99px;font-size:.78rem;font-weight:800}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 0 14px;flex-wrap:wrap}.section-head h2{margin:0}.muted{color:var(--muted)}.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+input,select,textarea{border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 12px;font:inherit;min-width:0;width:100%;color:var(--ink)}.tools input{flex:1;min-width:190px}.tools select{width:auto;min-width:150px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 5px 20px #16324f08;display:flex;flex-direction:column;gap:10px}.card h3{margin:0;font-size:1.1rem}.card p{margin:0;color:var(--muted);font-size:.93rem}.card .bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:10px}.price{font-weight:850;color:var(--navy)}.primary{background:var(--blue);color:white}.secondary{background:#eaf2ff;color:#194e83}.outline{background:#fff;border:1px solid var(--line);color:var(--ink)}.free{color:#137647;font-weight:800}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formgrid .wide{grid-column:1/-1}.hidden{display:none!important}.notice{padding:12px 14px;border-radius:12px;background:#fff5d9;color:#765100;font-size:.9rem;margin:16px 0}.success{background:#e5f8ed;color:#145d35}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:#f4f8ff;padding:14px;border-radius:12px}.stat strong{display:block;font-size:1.5rem;color:var(--navy)}.tag{font-size:.75rem;background:#f0f2f5;padding:4px 8px;border-radius:6px;align-self:flex-start}
+footer{text-align:center;padding:25px;color:var(--muted);border-top:1px solid var(--line)}.empty{padding:28px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.hero-icon{display:none}}
+@media(max-width:540px){.grid,.stats,.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.hero{padding:24px}.hero h1{font-size:2.2rem}header{align-items:flex-start}nav{width:100%}nav button{padding:8px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">🎓</div><div>EDU BLOG<div style="font-size:.72rem;font-weight:500;color:#d7e6f5">Learn today. Achieve tomorrow.</div></div></div>
+  <nav><button class="active" data-view="home">Home</button><button data-view="materials">Study materials</button><button data-view="about">About</button><button data-view="admin">Admin demo</button></nav>
+</header>
+<main>
+<section id="homeView">
+  <div class="hero"><div><span class="pill">YOUR LEARNING HUB</span><h1>Learn smarter.<br>Reach further.</h1><p>Discover study notes, revision guides, teaching resources and educational articles in one convenient place.</p><button class="btn" onclick="showView('materials')">Explore materials →</button></div><div class="hero-icon">📚</div></div>
+  <div class="section-head"><div><h2>Explore learning resources</h2><div class="muted">Free resources and premium downloads.</div></div></div>
+  <div class="grid" id="homeCards"></div>
+  <div class="notice">Demo version: sample resources and prices are illustrative. Payments are not collected and premium files are not delivered yet.</div>
+</section>
+<section id="materialsView" class="hidden">
+  <div class="section-head"><div><h2>Study materials</h2><div class="muted">Search resources by title, category or description.</div></div></div>
+  <div class="tools"><input id="search" placeholder="Search notes, lesson plans, revision..."><select id="category"><option value="All">All categories</option><option>Study Notes</option><option>Teaching Resources</option><option>Revision</option><option>Articles</option></select><select id="priceFilter"><option value="All">All prices</option><option value="Free">Free only</option><option value="Paid">Premium only</option></select></div>
+  <div class="grid" id="materialCards"></div>
+</section>
+<section id="aboutView" class="hidden">
+  <div class="panel"><span class="pill">ABOUT EDU BLOG</span><h2>Education resources made easier to find.</h2><p>EDU BLOG is a planned online learning hub for students, teachers and lifelong learners. The goal is to make useful educational content accessible, affordable and easy to use on phones and computers.</p><h3>How the site may earn</h3><ul><li>Sell original notes and teaching resources.</li><li>Offer selected premium learning packs.</li><li>Consider advertising after the site has enough useful content and meets ad network requirements.</li></ul><p class="muted">Only upload material you created or have permission to distribute. Do not sell copyrighted books, examination papers or other people's work without authorization.</p></div>
+</section>
+<section id="adminView" class="hidden">
+  <div class="section-head"><div><h2>Admin dashboard preview</h2><div class="muted">A local demonstration of content management.</div></div><span class="pill">DEMO ONLY</span></div>
+  <div class="notice">This is not a secure administrator login. Changes are saved only in this browser on this device. Do not enter passwords or sensitive information. A production site needs server-side authentication and a database.</div>
+  <div class="stats"><div class="stat"><span class="muted">Listed resources</span><strong id="statCount">0</strong></div><div class="stat"><span class="muted">Free resources</span><strong id="statFree">0</strong></div><div class="stat"><span class="muted">Premium resources</span><strong id="statPaid">0</strong></div></div>
+  <div class="panel"><h3>Add a resource</h3><form id="addForm" class="formgrid">
+    <div><label for="title">Resource title</label><input id="title" required placeholder="e.g. Grade 10 Grammar Notes"></div>
+    <div><label for="cat">Category</label><select id="cat"><option>Study Notes</option><option>Teaching Resources</option><option>Revision</option><option>Articles</option></select></div>
+    <div class="wide"><label for="desc">Short description</label><textarea id="desc" required rows="2" placeholder="What will learners get?"></textarea></div>
+    <div><label for="price">Price (KSh; 0 = free)</label><input id="price" type="number" min="0" step="1" value="0" required></div>
+    <div><label for="level">Level</label><select id="level"><option>All levels</option><option>Primary</option><option>Junior School</option><option>Senior School</option><option>College / University</option><option>Teachers</option></select></div>
+    <div class="wide"><button class="primary" type="submit">Add resource</button></div>
+  </form></div>
+  <div class="panel"><h3>Manage resources</h3><div id="adminList"></div><button class="outline" id="resetDemo" style="margin-top:12px">Reset demo content</button></div>
+</section>
+</main>
+<footer>© <span id="year"></span> EDU BLOG · Learn today. Achieve tomorrow.</footer>
+<script>
+const starter=[
+{id:1,title:"English Grammar: Tenses",category:"Study Notes",description:"A learner-friendly overview of common English tenses with examples and practice prompts.",price:0,level:"Senior School"},
+{id:2,title:"Lesson Plan Template",category:"Teaching Resources",description:"A simple lesson-plan structure for teachers to adapt to their subject and learners.",price:50,level:"Teachers"},
+{id:3,title:"Literature Revision Guide",category:"Revision",description:"A sample revision framework for themes, characters, style and textual evidence.",price:80,level:"College / University"},
+{id:4,title:"How to Study Effectively",category:"Articles",description:"Practical ideas for revision schedules, active recall and managing study time.",price:0,level:"All levels"},
+{id:5,title:"Scheme of Work Template",category:"Teaching Resources",description:"An editable planning outline for organizing a term's teaching activities.",price:100,level:"Teachers"},
+{id:6,title:"Exam Preparation Checklist",category:"Revision",description:"A simple checklist to help learners prepare calmly and revise systematically.",price:0,level:"All levels"}
+];
+let resources;try{resources=JSON.parse(localStorage.getItem("edublog_resources"))||starter}catch(e){resources=starter}
+const save=()=>{try{localStorage.setItem("edublog_resources",JSON.stringify(resources))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function card(r){return `<article class="card"><span class="tag">${esc(r.category)} · ${esc(r.level||"All levels")}</span><h3>${esc(r.title)}</h3><p>${esc(r.description)}</p><div class="bottom"><span class="${r.price===0?'free':'price'}">${r.price===0?'FREE':'KSh '+Number(r.price).toLocaleString()}</span><button class="secondary" onclick="previewResource(${r.id})">${r.price===0?'View details':'View offer'}</button></div></article>`}
+function render(){let home=document.getElementById('homeCards');home.innerHTML=resources.slice(0,3).map(card).join('')||'<div class="empty">No resources yet.</div>';let q=(document.getElementById('search')?.value||'').toLowerCase();let c=document.getElementById('category')?.value||'All';let p=document.getElementById('priceFilter')?.value||'All';let filtered=resources.filter(r=>(c==='All'||r.category===c)&&(p==='All'||(p==='Free'?r.price===0:r.price>0))&&(r.title+' '+r.description+' '+r.category).toLowerCase().includes(q));document.getElementById('materialCards').innerHTML=filtered.map(card).join('')||'<div class="empty">No matching resources. Try another search.</div>';document.getElementById('statCount').textContent=resources.length;document.getElementById('statFree').textContent=resources.filter(r=>r.price===0).length;document.getElementById('statPaid').textContent=resources.filter(r=>r.price>0).length;document.getElementById('adminList').innerHTML=resources.map(r=>`<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap"><div><strong>${esc(r.title)}</strong><div class="muted" style="font-size:.86rem">${esc(r.category)} · ${r.price===0?'Free':'KSh '+r.price}</div></div><button class="outline" onclick="deleteResource(${r.id})">Delete</button></div>`).join('')||'<p class="muted">No resources listed.</p>'}
+function showView(v){document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));document.getElementById(v+'View').classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));if(v==='materials')render();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+['search','category','priceFilter'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+document.getElementById('addForm').addEventListener('submit',e=>{e.preventDefault();resources.unshift({id:Date.now(),title:document.getElementById('title').value.trim(),category:document.getElementById('cat').value,description:document.getElementById('desc').value.trim(),price:Math.max(0,Number(document.getElementById('price').value)||0),level:document.getElementById('level').value});save();e.target.reset();document.getElementById('price').value=0;render();alert('Resource added to this browser demo.')});
+function deleteResource(id){if(confirm('Remove this resource from the demo?')){resources=resources.filter(r=>r.id!==id);save();render()}}
+function previewResource(id){let r=resources.find(x=>x.id===id);if(!r)return;alert(r.title+'\\n\\n'+r.description+'\\n\\n'+(r.price===0?'This is marked as free.':'Listed price: KSh '+r.price+'\\nCheckout is not connected yet. No payment has been taken.'))}
+document.getElementById('resetDemo').addEventListener('click',()=>{if(confirm('Reset resources to the original sample content?')){resources=starter.map(x=>({...x}));save();render()}});
+document.getElementById('year').textContent=new Date().getFullYear();render();
+</script>
+</body>
+</html>
