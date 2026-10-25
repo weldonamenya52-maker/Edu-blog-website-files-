@@ -1,0 +1,9 @@
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "edu-blog-website-files",
+  "compatibility_date": "2026-10-25",
+  "assets": {
+    "directory": "."
+  }
+}
